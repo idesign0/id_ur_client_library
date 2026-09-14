@@ -7971,7 +7971,7 @@ inline bool Server::listen_internal() {
       // sockets connected via WASAccept inherit flags NO_HANDLE_INHERIT,
       // OVERLAPPED
       socket_t sock = WSAAccept(svr_sock_, nullptr, nullptr, nullptr, 0);
-#elif defined SOCK_CLOEXEC
+#elif defined(SOCK_CLOEXEC) && defined(__linux__)
       socket_t sock = accept4(svr_sock_, nullptr, nullptr, SOCK_CLOEXEC);
 #else
       socket_t sock = accept(svr_sock_, nullptr, nullptr);
